@@ -20,6 +20,10 @@
       tr:nth-child(even) {background-color: #f9f9f9;}
       tr:hover {background-color: #eaeaea;}
     </style>
+  <meta charset="UTF-8">
+  <title>Meine Tabelle mit DataTables</title>
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/jquery.dataTables.min.css">  
   </head>
   <body>
     <h1>Übersicht der PDF-Dokumente</h1>
@@ -30,17 +34,26 @@
         <th>Download</th>
       </tr>
       <tr>
-        <td>Anleitung 1</td>
+        <td>006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01</td>
         <td>Drehbares Rad V2.0.</td>
-        <td><a href="pdfs/006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01.pdf" target="_blank">Herunterladen</a></td>
+        <td><a href="pdfs/006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01.pdf" target="_blank">Download</a></td>
       </tr>
       <tr>
         <td>Anleitung 2</td>
         <td>Kurze Beschreibung zur Anleitung 2.</td>
-        <td><a href="pdfs/anleitung2.pdf" target="_blank">Herunterladen</a></td>
+        <td><a href="pdfs/anleitung2.pdf" target="_blank">Download</a></td>
       </tr>
       <!-- Weitere Zeilen für zusätzliche PDFs einfügen -->
     </table>
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/2.0.7/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#meineTabelle').DataTable();
+    });
+  </script>
   </body>
   <footer>
   <p><a href="impressum.html">Impressum</a></p> <p><a href="Datenschutz.html">Datenschutz</a></p>
