@@ -21,8 +21,8 @@
       tr:hover {background-color: #eaeaea;}
     </style>
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/jquery.dataTables.min.css">  
   </head>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
   <body>
     <h1>Übersicht der PDF-Dokumente</h1>
     <table id="meineTabelle">
@@ -34,32 +34,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
           <td>Drehbare Rad V2.0</td>
           <td>006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01</td>
           <td><a href="pdfs/006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01.pdf" target="_blank">Download</a></td>
-        </tr>
-        <tr>
+      <tbody>
           <td>Schlauchadapter</td>
           <td>002_EF__12z__V03__Gebrauchsanleitung__25__04__06___V01</td>
           <td><a href="pdfs/002_EF__12z__V03__Gebrauchsanleitung__25__04__06___V01.pdf" target="_blank">Download</a></td>
-        </tr>
+      <tbody>
           <td>Getränkehalter</td>
           <td>Montage_Betriebsanleitung_Getränkebrille_T4__V01</td>
           <td><a href="pdfs/Montage_Betriebsanleitung_Getränkebrille_T4__V01.pdf" target="_blank">Download</a></td>
-        </tr>
         <!-- Weitere Zeilen für zusätzliche PDFs einfügen -->
       </tbody>
     </table>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/2.0.7/js/jquery.dataTables.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        $('#meineTabelle').DataTable();
-      });
-    </script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#meineTabelle').DataTable();
+  });
+</script>
   <footer>
     <p><a href="impressum.html">Impressum</a></p>
     <p><a href="Datenschutz.html">Datenschutz</a></p>
