@@ -1,66 +1,151 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF-Übersicht</title>
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-      }
-      th {
-        text-align: left;
-        background-color: #f2f2f2;
-      }
-      tr:nth-child(even) {background-color: #f9f9f9;}
-      tr:hover {background-color: #eaeaea;}
-      th {
-  cursor: pointer;
-}
-    </style>
-    <!-- DataTables CSS -->
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF-Übersicht</title>
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
-  <body>
-    <h1>Übersicht der PDF-Dokumente</h1>
-    <table id="meineTabelle">
-      <thead>
-        <tr>
-          <th>Beschreibung</th>
-          <th>Dateiname</th>
-          <th>Download</th>
-        </tr>
-      </thead>
-      <tbody>
-          <td>Drehbare Rad V2.0</td>
-          <td>006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01</td>
-          <td><a href="pdfs/006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01.pdf" target="_blank">Download</a></td>
-      <tbody>
-          <td>Schlauchadapter</td>
-          <td>002_EF__12z__V03__Gebrauchsanleitung__25__04__06___V01</td>
-          <td><a href="pdfs/002_EF__12z__V03__Gebrauchsanleitung__25__04__06___V01.pdf" target="_blank">Download</a></td>
-      <tbody>
-          <td>Getränkehalter</td>
-          <td>Montage_Betriebsanleitung_Getränkebrille_T4__V01</td>
-          <td><a href="pdfs/Montage_Betriebsanleitung_Getränkebrille_T4__V01.pdf" target="_blank">Download</a></td>
-        <!-- Weitere Zeilen für zusätzliche PDFs einfügen -->
-      </tbody>
-    </table>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
-<script>
-  $(document).ready(function() {
-    $('#meineTabelle').DataTable();
-  });
-</script>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      text-align: left;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+      font-size: 40px;
+    }
+    #meineTabelle td {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    #meineTabelle th {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    #meineTabelle th:nth-child(1),
+    #meineTabelle td:nth-child(1) {
+      max-width: 180px; 
+      width:120px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    #meineTabelle td:nth-child(1) img {
+      display: inline-block;
+    }
+    tr:nth-child(even) {background-color: #f9f9f9;}
+    tr:hover {background-color: #eaeaea;}
+    a {
+      color: #222;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
+    header {
+      text-align: center;
+    }
+    footer {
+      margin-top: 2em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo/LADS_PRINT_LOGO_SCHWARZ.png" alt="Firmenlogo" style="height: 100px;">
+  </header>
+  <h1>Gebrauchsanleitungen</h1>
+  <table id="meineTabelle">
+    <thead>
+      <tr>
+        <th>Bild</th>
+        <th>Artikelname (Anklicken zum Downloaden)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Hier wird der Inhalt per JavaScript eingefügt -->
+    </tbody>
+  </table>
   <footer>
-    <p><a href="impressum.html">Impressum</a></p>
-    <p><a href="Datenschutz.html">Datenschutz</a></p>
+    <p>
+      <a href="impressum.html" style="font-size: 20px;" onclick="sessionStorage.setItem('scrollPosition', window.scrollY);">Impressum</a>
+    </p>
+    <p>
+      <a href="Datenschutz.html" style="font-size: 20px;" onclick="sessionStorage.setItem('scrollPosition', window.scrollY);">Datenschutz</a>
+    </p>
   </footer>
-  </body>
+  // ... vorheriger Code bleibt gleich
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+  <script>
+    // Scrollposition beim Verlassen speichern (z.B. bei Neuladen oder Verlassen der Seite)
+    window.addEventListener('beforeunload', function() {
+      sessionStorage.setItem('scrollPosition', window.scrollY);
+    });
+
+    // Scrollposition auch beim pageshow-Event wiederherstellen (wichtig für bfcache)
+    window.addEventListener('pageshow', function(event) {
+      // DataTable muss ggf. schon initialisiert sein, daher in setTimeout
+      setTimeout(function() {
+        const scrollY = sessionStorage.getItem('scrollPosition');
+        if (scrollY !== null) {
+          window.scrollTo(0, parseInt(scrollY, 10));
+          sessionStorage.removeItem('scrollPosition');
+        }
+      }, 0);
+    });
+
+    $(document).ready(function() {
+      // Artikeldaten als Array von Objekten
+      const artikelListe = [
+        { name: "Drehbares Rad V2.0", dateiname: "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01" },
+        { name: "Schlauchadapter", dateiname: "002_EF__12z__V03__Gebrauchsanleitung__25__04__06___V01" },
+        { name: "Getränkehalter", dateiname: "005_A__T4__Gebrauchsanleitung__24_09_22__V01" },
+        { name: "Griffe Monsieur", dateiname: "019_A__CC__Gebrauchsanweisung__04_12_01__V02" },
+        { name: "Kippscheren", dateiname: "023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01" },
+        { name: "Laubschutzgitter", dateiname: "027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01" },
+        { name: "Saugrüssel", dateiname: "032_A__Saug_PBD40__Gebrauchsanleitung__V01" },
+        { name: "Spikes, alle Varianten", dateiname: "Spikes_Montage_Betriebsanleitung__25_04_06__V03" },
+        { name: "Stiftehalter Explore", dateiname: "025_A__Explore__Gebrauchsanweisung__V02" },
+        { name: "Stiftehalter Joy", dateiname: "025_B__Joy__Gebrauchsanleitung__24_10_28__V01" },
+        { name: "Wandhalterung GSR", dateiname: "035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02" },
+        { name: "Wandhalterung GWS", dateiname: "036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01" }
+        // Weitere Artikel nach gleichem Muster ergänzen
+      ];
+
+      const $tbody = $('#meineTabelle tbody');
+      artikelListe.forEach(artikel => {
+        const bildPfad = `bilder/${artikel.dateiname}.jpg`;
+        const pdfPfad = `pdfs/${artikel.dateiname}.pdf`;
+        const $tr = $(`
+          <tr>
+            <td><img src="${bildPfad}" alt="${artikel.name}" style="max-width: 150px; height: auto;"></td>
+            <td><a href="${pdfPfad}" target="_blank">${artikel.name}</a></td>
+          </tr>
+        `);
+        $tbody.append($tr);
+      });
+
+      // DataTable initialisieren
+      $('#meineTabelle').DataTable({
+        autoWidth: false,
+        order: [[1, 'asc']],
+        pageLength: 25,
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/de-DE.json'
+        }
+      });
+    });
+  </script>
+</body>
 </html>
