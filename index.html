@@ -57,6 +57,49 @@
       margin-top: 2em;
       text-align: center;
     }
+    /* Modal Styles für Video */
+    #videoModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    #videoModalContent {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 0 20px #000;
+      position: relative;
+    }
+    #videoModalClose {
+      position: absolute;
+      top: -25px; /* weiter nach oben */
+      right: -25px; /* weiter nach rechts */
+      font-size: 40px;
+      cursor: pointer;
+      color: #333;
+      background: #fff;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1100;
+      border: 1px solid #ccc;
+    }
+    #videoModal video {
+      max-width: 80vw;
+      max-height: 70vh;
+      display: block;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
@@ -66,13 +109,14 @@
   <h1>Gebrauchsanleitungen</h1>
   <table id="meineTabelle">
     <thead>
-      <tr>
-        <th>Bild</th>
-        <th>Artikelname (Anklicken zum Downloaden)</th>
-      </tr>
+    <tr>
+      <th>Bild</th>
+      <th>Anleitung PDF (Anklicken zum Downloaden)</th>
+      <th>Video</th>
+    </tr>
     </thead>
     <tbody>
-      <!-- Hier wird der Inhalt per JavaScript eingefügt -->
+    <!-- Hier wird der Inhalt per JavaScript eingefügt -->
     </tbody>
   </table>
   <footer>
@@ -84,6 +128,14 @@
     </p>
   </footer>
 
+  <!-- Video Modal -->
+  <div id="videoModal">
+    <div id="videoModalContent">
+      <span id="videoModalClose">&times;</span>
+      <video id="videoPlayer" controls></video>
+    </div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
   <script>
@@ -94,7 +146,6 @@
 
     // Scrollposition auch beim pageshow-Event wiederherstellen (wichtig für bfcache)
     window.addEventListener('pageshow', function(event) {
-      // DataTable muss ggf. schon initialisiert sein, daher in setTimeout
       setTimeout(function() {
         const scrollY = sessionStorage.getItem('scrollPosition');
         if (scrollY !== null) {
@@ -105,7 +156,7 @@
     });
 
     $(document).ready(function() {
-      // Artikeldaten als Array von Objekten
+      // Artikeldaten als Array von Objekten, jetzt mit optionalem video und videoTitle
       const artikelListe = [
         { name: "Drehbares Rad V2.0", dateiname: "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01" },
         { name: "Schlauchadapter", dateiname: "002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02" },
@@ -114,7 +165,12 @@
         { name: "Kippscheren", dateiname: "023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01" },
         { name: "Laubschutzgitter", dateiname: "027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01" },
         { name: "Saugrüssel", dateiname: "032_A__Saug_PBD40__Gebrauchsanleitung__V01" },
-        { name: "Spikes, alle Varianten", dateiname: "Spikes_Montage_Betriebsanleitung__25_04_06__V03" },
+        { 
+          name: "Spikes, alle Varianten", 
+          dateiname: "Spikes_Montage_Betriebsanleitung__25_04_06__V03", 
+          video: "videos/spikes.mp4",
+          videoTitle: "Montagevideo Spikes"
+        },
         { name: "Stiftehalter Explore", dateiname: "025_A__Explore__Gebrauchsanweisung__V02" },
         { name: "Stiftehalter Joy", dateiname: "025_B__Joy__Gebrauchsanleitung__24_10_28__V01" },
         { name: "Wandhalterung GSR", dateiname: "035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02" },
@@ -126,10 +182,17 @@
       artikelListe.forEach(artikel => {
         const bildPfad = `bilder/${artikel.dateiname}.jpg`;
         const pdfPfad = `pdfs/${artikel.dateiname}.pdf`;
+        // Video-Link, falls vorhanden, mit individuellem Titel
+        let videoHtml = '';
+        if (artikel.video) {
+          const videoLinkText = artikel.videoTitle ? artikel.videoTitle : (artikel.name + " Video");
+          videoHtml = `<a href="#" class="video-link" data-video="${artikel.video}">${videoLinkText}</a>`;
+        }
         const $tr = $(`
           <tr>
             <td><img src="${bildPfad}" alt="${artikel.name}" style="max-width: 150px; height: auto;"></td>
             <td><a href="${pdfPfad}" target="_blank">${artikel.name}</a></td>
+            <td>${videoHtml}</td>
           </tr>
         `);
         $tbody.append($tr);
@@ -142,6 +205,35 @@
         pageLength: 25,
         language: {
           url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/de-DE.json'
+        }
+      });
+
+      // Video Modal Logik
+      $(document).on('click', '.video-link', function(e) {
+        e.preventDefault();
+        const videoSrc = $(this).data('video');
+        const video = $('#videoPlayer');
+        video.attr('src', videoSrc);
+        $('#videoModal').css('display', 'flex');
+        // Video automatisch abspielen
+        setTimeout(function() {
+          video.get(0).play();
+        }, 100);
+      });
+      $('#videoModalClose, #videoModal').on('click', function(e) {
+        // Schließen, wenn auf das X oder den Hintergrund geklickt wird
+        if (e.target === this) {
+          $('#videoPlayer').get(0).pause();
+          $('#videoPlayer').attr('src', '');
+          $('#videoModal').hide();
+        }
+      });
+      // Stoppe Video beim Schließen mit ESC
+      $(document).on('keydown', function(e) {
+        if (e.key === "Escape") {
+          $('#videoPlayer').get(0).pause();
+          $('#videoPlayer').attr('src', '');
+          $('#videoModal').hide();
         }
       });
     });
