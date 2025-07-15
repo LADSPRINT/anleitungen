@@ -3,323 +3,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF-Übersicht</title>
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
+  <title>Gebrauchsanleitungen</title>
+
+  <!-- DataTables -->
+  <link rel="stylesheet"
+        href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
+
   <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
+  /* ----------------------- Grundlayout ----------------------- */
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{border:1px solid #ddd;padding:8px}
+  tr:nth-child(even){background:#f9f9f9}
+  tr:hover{background:#eaeaea}
+
+  th{text-align:left;background:#f2f2f2;font-size:20px;font-weight:bold}
+  td{font-size:20px;font-weight:bold}
+
+  h1{text-align:center;font-size:40px;margin:.4em 0}
+
+  a{color:#222;text-decoration:none}
+  a:hover{color:#007bff;text-decoration:underline}
+
+  header{text-align:center;margin:1em 0}
+  footer{text-align:center;margin:2em 0}
+
+  /* ---------- Spalte 1 (Bild) – nur Desktop / Tablet ---------- */
+  #meineTabelle th:nth-child(1),
+  #meineTabelle td:nth-child(1){
+      max-width:180px;width:120px;text-align:center;vertical-align:middle
+  }
+
+  /* Bild in Tabellenzelle (Standard-Ansicht) */
+  #meineTabelle td img{
+      max-width:150px;height:auto;display:block;margin:0 auto;float:none
+  }
+
+  /* ---------------------- Video-Modal ------------------------- */
+  #videoModal{
+      display:none;position:fixed;z-index:1000;inset:0;
+      background:rgba(0,0,0,.7);justify-content:center;align-items:center
+  }
+  #videoModalContent{
+      position:relative;background:#fff;border-radius:8px;
+      padding:20px;max-width:90vw;max-height:90vh;box-shadow:0 0 20px #000
+  }
+  #videoModalClose{
+      position:absolute;top:-25px;right:-25px;width:48px;height:48px;
+      font-size:40px;color:#333;cursor:pointer;background:#fff;
+      border:1px solid #ccc;border-radius:50%;display:flex;
+      align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2)
+  }
+  #videoModal video,#videoIframe{display:block;margin:0 auto;max-width:80vw;max-height:70vh}
+
+  /* -------------------- Breakpoint ≤ 900 px -------------------- */
+  @media(max-width:900px){
+    #videoModalContent{max-width:98vw;padding:5vw 2vw}
+    #videoModal video,#videoIframe{max-width:98vw;max-height:50vh;width:100%;height:auto}
+  }
+
+  /* -------------------- Breakpoint ≤ 700 px -------------------- */
+  @media(max-width:700px){
+    h1{font-size:28px}
+    th,td{font-size:16px;padding:4px}
+    #meineTabelle td img{max-width:100px}
+    #videoModalClose{font-size:30px;width:36px;height:36px;top:-15px;right:-15px}
+  }
+
+  /* -------------------- Breakpoint ≤ 500 px -------------------- */
+  @media(max-width:500px){
+    /* Tabelle 1-spaltig ausgeben */
+    #meineTabelle,#meineTabelle thead,#meineTabelle tbody,
+    #meineTabelle th,#meineTabelle td,#meineTabelle tr{
+      display:block;width:100%
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
+    #meineTabelle thead{display:none}
+    #meineTabelle tr{margin-bottom:15px;border-bottom:2px solid #ccc}
+
+    /* Zelle als Flex-Box → Inhalt zentriert */
+    #meineTabelle td{
+      border:none;min-height:40px;font-size:15px;text-align:center;
+      display:flex;flex-direction:column;align-items:center;justify-content:center
     }
-    th {
-      text-align: left;
-      background-color: #f2f2f2;
+    /* Pseudotitel ausblenden */
+    #meineTabelle td:before{content:none}
+
+    /* Bild klein + zentriert */
+    #meineTabelle td img{
+      max-width:100px;margin:8px 0;display:block;float:none
     }
-    h1 {
-      text-align: center;
-      font-size: 40px;
-    }
-    #meineTabelle td {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    #meineTabelle th {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    #meineTabelle th:nth-child(1),
-    #meineTabelle td:nth-child(1) {
-      max-width: 180px; 
-      width:120px;
-      text-align: center;
-      vertical-align: middle;
-    }
-    #meineTabelle td:nth-child(1) img {
-      display: inline-block;
-    }
-    tr:nth-child(even) {background-color: #f9f9f9;}
-    tr:hover {background-color: #eaeaea;}
-    a {
-      color: #222;
-      text-decoration: none;
-    }
-    a:hover {
-      color: #007bff;
-      text-decoration: underline;
-    }
-    header {
-      text-align: center;
-    }
-    footer {
-      margin-top: 2em;
-      text-align: center;
-    }
-    /* Modal Styles für Video */
-    #videoModal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-    }
-    #videoModalContent {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 90vw;
-      max-height: 90vh;
-      box-shadow: 0 0 20px #000;
-      position: relative;
-    }
-    #videoModalClose {
-      position: absolute;
-      top: -25px; /* weiter nach oben */
-      right: -25px; /* weiter nach rechts */
-      font-size: 40px;
-      cursor: pointer;
-      color: #333;
-      background: #fff;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1100;
-      border: 1px solid #ccc;
-    }
-    #videoModal video {
-      max-width: 80vw;
-      max-height: 70vh;
-      display: block;
-      margin: 0 auto;
-    }
-     @media (max-width: 900px) {
-      #videoModalContent {
-        max-width: 98vw;
-        padding: 5vw 2vw;
-      }
-      #videoModal video,
-      #videoIframe {
-        max-width: 98vw;
-        max-height: 50vh;
-        width: 100%;
-        height: auto;
-      }
-    }
-    @media (max-width: 700px) {
-      h1 {
-        font-size: 28px;
-      }
-      #meineTabelle th, #meineTabelle td {
-        font-size: 16px;
-        padding: 4px;
-      }
-      #meineTabelle td img {
-        max-width: 80px;
-      }
-      #videoModalContent {
-        padding: 2vw 1vw;
-      }
-      #videoModalClose {
-        font-size: 30px;
-        width: 36px;
-        height: 36px;
-        top: -15px;
-        right: -15px;
-      }
-    }
-    @media (max-width: 500px) {
-      #meineTabelle, #meineTabelle thead, #meineTabelle tbody, #meineTabelle th, #meineTabelle td, #meineTabelle tr {
-        display: block;
-        width: 100%;
-      }
-      #meineTabelle thead {
-        display: none;
-      }
-      #meineTabelle tr {
-        margin-bottom: 15px;
-        border-bottom: 2px solid #ccc;
-      }
-      #meineTabelle td {
-        border: none;
-        position: relative;
-        padding-left: 50%;
-        min-height: 40px;
-        font-size: 15px;
-      }
-      #meineTabelle td:before {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        width: 45%;
-        white-space: nowrap;
-        font-weight: bold;
-        color: #555;
-        font-size: 13px;
-      }
-      #meineTabelle td:nth-child(1):before { content: "Bild"; }
-      #meineTabelle td:nth-child(2):before { content: "Anleitung PDF"; }
-      #meineTabelle td:nth-child(3):before { content: "Video"; }
-      #meineTabelle td img {
-        max-width: 100px;
-      }
-      #videoModalContent {
-        max-width: 100vw;
-        padding: 0;
-      }
-      #videoModal video,
-      #videoIframe {
-        max-width: 100vw;
-        width: 100vw;
-        height: 40vw;
-      }
-    }
+    #meineTabelle td a{margin:8px 0}
+  }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo/LADS_PRINT_LOGO_SCHWARZ.png" alt="Firmenlogo" style="height: 100px;">
+    <img src="logo/LADS_PRINT_LOGO_SCHWARZ.png"
+         alt="Firmenlogo" style="height:100px">
   </header>
+
   <h1>Gebrauchsanleitungen</h1>
+  <h1 style="font-size: 15px; margin-top: 0.2em;">Text anklicken zum Downloaden</h1>
+
   <table id="meineTabelle">
     <thead>
-    <tr>
-      <th>Bild</th>
-      <th>Anleitung PDF (Anklicken zum Downloaden)</th>
-      <th>Video</th>
-    </tr>
+      <tr>
+        <th>Bild</th>
+        <th>Anleitung PDF (Anklicken zum Downloaden)</th>
+        <th>Video</th>
+      </tr>
     </thead>
-    <tbody>
-    <!-- Hier wird der Inhalt per JavaScript eingefügt -->
-    </tbody>
+    <tbody><!-- Zeilen werden via JS eingefügt --></tbody>
   </table>
+
   <footer>
-    <p>
-      <a href="impressum.html" style="font-size: 20px;" onclick="sessionStorage.setItem('scrollPosition', window.scrollY);">Impressum</a>
-    </p>
-    <p>
-      <a href="Datenschutz.html" style="font-size: 20px;" onclick="sessionStorage.setItem('scrollPosition', window.scrollY);">Datenschutz</a>
-    </p>
+    <p><a href="impressum.html" style="font-size:20px"
+          onclick="sessionStorage.setItem('scrollPosition',window.scrollY)">Impressum</a></p>
+    <p><a href="Datenschutz.html" style="font-size:20px"
+          onclick="sessionStorage.setItem('scrollPosition',window.scrollY)">Datenschutz</a></p>
   </footer>
 
- <!-- Video Modal -->
- <div id="videoModal">
-  <div id="videoModalContent">
-    <span id="videoModalClose">&times;</span>
-    <video id="videoPlayer" controls style="display:none"></video>
-    <iframe id="videoIframe" style="display:none" width="800" height="450" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <!-- --------------- Video-Modal --------------- -->
+  <div id="videoModal">
+    <div id="videoModalContent">
+      <span id="videoModalClose">&times;</span>
+      <video id="videoPlayer" controls style="display:none"></video>
+      <iframe id="videoIframe" style="display:none"
+              width="800" height="450" frameborder="0"
+              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
   </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
-<script>
-  // ... Scrollposition Code bleibt gleich ...
+  <!-- --------------- Scripte -------------------- -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
 
-  $(document).ready(function() {
-    // Artikeldaten als Array von Objekten, jetzt mit optionalem video und videoTitle
-    const artikelListe = [
-      { name: "Drehbares Rad V2.0", dateiname: "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01" },
-      { name: "Schlauchadapter", dateiname: "002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02" },
-      { name: "Getränkehalter", dateiname: "005_A__T4__Gebrauchsanleitung__24_09_22__V01" },
-      { name: "Griffe Monsieur", dateiname: "019_A__CC__Gebrauchsanweisung__04_12_01__V02" },
-      { name: "Kippscheren", dateiname: "023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01" },
-      { name: "Laubschutzgitter", dateiname: "027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01" },
-      { name: "Saugrüssel", dateiname: "032_A__Saug_PBD40__Gebrauchsanleitung__V01" },
-      { 
-        name: "Spikes, alle Varianten", 
-        dateiname: "Spikes_Montage_Betriebsanleitung__25_04_06__V03", 
-        video: "https://www.youtube.com/embed/IlAO6DtBMdc?si=sLlY_Ztoa5T7E-OQ", // <-- YouTube Video einbinden
-        videoTitle: "Montagevideo Spikes"
+  <script>
+  /* ----------- Scroll-Position behalten ----------- */
+  window.addEventListener('beforeunload',()=>sessionStorage.setItem('scrollPosition',window.scrollY));
+  window.addEventListener('pageshow',()=>{const y=sessionStorage.getItem('scrollPosition');
+    if(y!==null){window.scrollTo(0,parseInt(y,10));sessionStorage.removeItem('scrollPosition')}});
+
+  /* ---------------- Daten & DOM ------------------- */
+  $(function(){
+    const artikelListe=[
+      {name:"Drehbares Rad V2.0",dateiname:"006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01"},
+      {name:"Schlauchadapter",dateiname:"002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02"},
+      {name:"Getränkehalter",dateiname:"005_A__T4__Gebrauchsanleitung__24_09_22__V01"},
+      {name:"Griffe Monsieur",dateiname:"019_A__CC__Gebrauchsanweisung__04_12_01__V02"},
+      {name:"Kippscheren",dateiname:"023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01"},
+      {name:"Laubschutzgitter",dateiname:"027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01"},
+      {name:"Saugrüssel",dateiname:"032_A__Saug_PBD40__Gebrauchsanleitung__V01"},
+      {
+        name:"Spikes, alle Varianten",
+        dateiname:"Spikes_Montage_Betriebsanleitung__25_04_06__V03",
+        video:"https://www.youtube.com/embed/IlAO6DtBMdc?si=sLlY_Ztoa5T7E-OQ",
+        videoTitle:"Montagevideo Spikes"
       },
-      { name: "Stiftehalter Explore", dateiname: "025_A__Explore__Gebrauchsanweisung__V02" },
-      { name: "Stiftehalter Joy", dateiname: "025_B__Joy__Gebrauchsanleitung__24_10_28__V01" },
-      { name: "Wandhalterung GSR", dateiname: "035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02" },
-      { name: "Wandhalterung GWS", dateiname: "036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01" }
-      // Weitere Artikel nach gleichem Muster ergänzen
+      {name:"Stiftehalter Explore",dateiname:"025_A__Explore__Gebrauchsanweisung__V02"},
+      {name:"Stiftehalter Joy",dateiname:"025_B__Joy__Gebrauchsanleitung__24_10_28__V01"},
+      {name:"Wandhalterung GSR",dateiname:"035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02"},
+      {name:"Wandhalterung GWS",dateiname:"036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01"}
     ];
 
-    const $tbody = $('#meineTabelle tbody');
-    artikelListe.forEach(artikel => {
-      const bildPfad = `bilder/${artikel.dateiname}.jpg`;
-      const pdfPfad = `pdfs/${artikel.dateiname}.pdf`;
-      // Video-Link, falls vorhanden, mit individuellem Titel
-      let videoHtml = '';
-      if (artikel.video) {
-        const videoLinkText = artikel.videoTitle ? artikel.videoTitle : (artikel.name + " Video");
-        videoHtml = `<a href="#" class="video-link" data-video="${artikel.video}">${videoLinkText}</a>`;
-      }
-      const $tr = $(`
+    const $tbody=$("#meineTabelle tbody");
+    artikelListe.forEach(a=>{
+      const bild=`bilder/${a.dateiname}.jpg`;
+      const pdf=`pdfs/${a.dateiname}.pdf`;
+      const linkText=a.videoTitle||`${a.name} Video`;
+      const videoCol=a.video?`<a href="#" class="video-link" data-video="${a.video}">${linkText}</a>`:"";
+      $tbody.append(`
         <tr>
-          <td><img src="${bildPfad}" alt="${artikel.name}" style="max-width: 150px; height: auto;"></td>
-          <td><a href="${pdfPfad}" target="_blank">${artikel.name}</a></td>
-          <td>${videoHtml}</td>
+          <td><img src="${bild}" alt="${a.name}"></td>
+          <td><a href="${pdf}" target="_blank">${a.name}</a></td>
+          <td>${videoCol}</td>
         </tr>
       `);
-      $tbody.append($tr);
     });
 
-    // DataTable initialisieren
-    $('#meineTabelle').DataTable({
-      autoWidth: false,
-      order: [[1, 'asc']],
-      pageLength: 25,
-      language: {
-        url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/de-DE.json'
-      }
+    /* DataTable */
+    $("#meineTabelle").DataTable({
+      autoWidth:false,order:[[1,"asc"]],pageLength:25,
+      language:{url:"https://cdn.datatables.net/plug-ins/2.0.7/i18n/de-DE.json"}
     });
 
-    // Video Modal Logik
-    $(document).on('click', '.video-link', function(e) {
+    /* ------------- Video-Modal-Logik ------------- */
+    $(document).on("click",".video-link",function(e){
       e.preventDefault();
-      const videoSrc = $(this).data('video');
-      const isYouTube = videoSrc.includes('youtube.com/embed');
-      if (isYouTube) {
-        $('#videoPlayer').hide().attr('src', '');
-        // Autoplay-Parameter korrekt anhängen
-        let autoplaySrc = videoSrc;
-        if (autoplaySrc.includes('?')) {
-          autoplaySrc += '&autoplay=1';
-        } else {
-          autoplaySrc += '?autoplay=1';
-        }
-        $('#videoIframe').attr('src', autoplaySrc).show();
-      } else {
-        $('#videoIframe').hide().attr('src', '');
-        $('#videoPlayer').attr('src', videoSrc).show();
-        setTimeout(function() {
-          $('#videoPlayer').get(0).play();
-        }, 100);
+      const src=$(this).data("video");
+      const yt=src.includes("youtube.com/embed");
+      if(yt){
+        let url=src+(src.includes("?")?"&":"?")+"autoplay=1";
+        $("#videoPlayer").hide().attr("src","");
+        $("#videoIframe").attr("src",url).show();
+      }else{
+        $("#videoIframe").hide().attr("src","");
+        $("#videoPlayer").attr("src",src).show()[0].play();
       }
-      $('#videoModal').css('display', 'flex');
+      $("#videoModal").css("display","flex");
     });
 
-    $('#videoModalClose, #videoModal').on('click', function(e) {
-      // Schließen, wenn auf das X oder den Hintergrund geklickt wird
-      if (e.target === this) {
-        $('#videoPlayer').get(0).pause();
-        $('#videoPlayer').attr('src', '').hide();
-        $('#videoIframe').attr('src', '').hide();
-        $('#videoModal').hide();
-      }
+    $("#videoModalClose,#videoModal").on("click",function(e){
+      if(e.target!==this)return;
+      $("#videoPlayer")[0].pause();
+      $("#videoPlayer").attr("src","").hide();
+      $("#videoIframe").attr("src","").hide();
+      $("#videoModal").hide();
     });
-    // Stoppe Video beim Schließen mit ESC
-    $(document).on('keydown', function(e) {
-      if (e.key === "Escape") {
-        $('#videoPlayer').get(0).pause();
-        $('#videoPlayer').attr('src', '').hide();
-        $('#videoIframe').attr('src', '').hide();
-        $('#videoModal').hide();
-        }
-      });
+    $(document).on("keydown",e=>{
+      if(e.key==="Escape")$("#videoModalClose").click();
     });
+  });
   </script>
 </body>
 </html>
