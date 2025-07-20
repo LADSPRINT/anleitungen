@@ -77,7 +77,13 @@
     /* Tabelle 1-spaltig ausgeben */
     #meineTabelle,#meineTabelle thead,#meineTabelle tbody,
     #meineTabelle th,#meineTabelle td,#meineTabelle tr{
-      display:block;width:100%
+    display:block;width:100%
+    }
+    /* Hebt die feste Breite der ersten Spalte für die mobile Ansicht auf. */
+    #meineTabelle th:nth-child(1),
+    #meineTabelle td:nth-child(1){
+      width: 100%;
+      max-width: none;
     }
     #meineTabelle thead{display:none}
     #meineTabelle tr{margin-bottom:15px;border-bottom:2px solid #ccc}
