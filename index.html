@@ -3,225 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gebrauchsanleitungen</title>
-
-  <!-- DataTables -->
-  <link rel="stylesheet"
-        href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
-
-  <style>
-  /* ----------------------- Grundlayout ----------------------- */
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,Helvetica,sans-serif}
-
-  table{width:100%;border-collapse:collapse}
-  th,td{border:1px solid #ddd;padding:8px}
-  tr:nth-child(even){background:#f9f9f9}
-  tr:hover{background:#eaeaea}
-
-  th{text-align:left;background:#f2f2f2;font-size:20px;font-weight:bold}
-  td{font-size:20px;font-weight:bold}
-
-  h1{text-align:center;font-size:40px;margin:.4em 0}
-
-  a{color:#222;text-decoration:none}
-  a:hover{color:#007bff;text-decoration:underline}
-
-  header{text-align:center;margin:1em 0}
-  footer{text-align:center;margin:2em 0}
-
-  /* ---------- Spalte 1 (Bild) – nur Desktop / Tablet ---------- */
-  #meineTabelle th:nth-child(1),
-  #meineTabelle td:nth-child(1){
-      max-width:180px;width:120px;text-align:center;vertical-align:middle
-  }
-
-  /* Bild in Tabellenzelle (Standard-Ansicht) */
-  #meineTabelle td img{
-      max-width:150px;height:auto;display:block;margin:0 auto;float:none
-  }
-
-  /* ---------------------- Video-Modal ------------------------- */
-  #videoModal{
-      display:none;position:fixed;z-index:1000;inset:0;
-      background:rgba(0,0,0,.7);justify-content:center;align-items:center
-  }
-  #videoModalContent{
-      position:relative;background:#fff;border-radius:8px;
-      padding:20px;max-width:90vw;max-height:90vh;box-shadow:0 0 20px #000
-  }
-  #videoModalClose{
-      position:absolute;top:-25px;right:-25px;width:48px;height:48px;
-      font-size:40px;color:#333;cursor:pointer;background:#fff;
-      border:1px solid #ccc;border-radius:50%;display:flex;
-      align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2)
-  }
-  #videoModal video,#videoIframe{display:block;margin:0 auto;max-width:80vw;max-height:70vh}
-
-  /* -------------------- Breakpoint ≤ 900 px -------------------- */
-  @media(max-width:900px){
-    #videoModalContent{max-width:98vw;padding:5vw 2vw}
-    #videoModal video,#videoIframe{max-width:98vw;max-height:50vh;width:100%;height:auto}
-  }
-
-  /* -------------------- Breakpoint ≤ 700 px -------------------- */
-  @media(max-width:700px){
-    h1{font-size:28px}
-    th,td{font-size:16px;padding:4px}
-    #meineTabelle td img{max-width:100px}
-    #videoModalClose{font-size:30px;width:36px;height:36px;top:-15px;right:-15px}
-  }
-
-  /* -------------------- Breakpoint ≤ 500 px -------------------- */
-  @media(max-width:500px){
-    /* Tabelle 1-spaltig ausgeben */
-    #meineTabelle,#meineTabelle thead,#meineTabelle tbody,
-    #meineTabelle th,#meineTabelle td,#meineTabelle tr{
-    display:block;width:100%
-    }
-    /* Hebt die feste Breite der ersten Spalte für die mobile Ansicht auf. */
-    #meineTabelle th:nth-child(1),
-    #meineTabelle td:nth-child(1){
-      width: 100%;
-      max-width: none;
-    }
-    #meineTabelle thead{display:none}
-    #meineTabelle tr{margin-bottom:15px;border-bottom:2px solid #ccc}
-
-    /* Zelle als Flex-Box → Inhalt zentriert */
-    #meineTabelle td{
-      border:none;min-height:40px;font-size:15px;text-align:center;
-      display:flex;flex-direction:column;align-items:center;justify-content:center
-    }
-    /* Pseudotitel ausblenden */
-    #meineTabelle td:before{content:none}
-
-    /* Bild klein + zentriert */
-    #meineTabelle td img{
-      max-width:100px;margin:8px 0;display:block;float:none
-    }
-    #meineTabelle td a{margin:8px 0}
-  }
-  </style>
+  <title>Gebrauchsanleitungen | LADSPRINT</title>
+  <meta name="description" content="Alle Gebrauchsanleitungen von LADSPRINT zentral an einem Ort. Passende Dokumente schnell finden, als PDF öffnen und bei Bedarf das passende Video ansehen.">
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <img src="logo/LADS_PRINT_LOGO_SCHWARZ.png"
-         alt="Firmenlogo" style="height:100px">
-  </header>
+  <div class="site-shell">
 
-  <h1>Gebrauchsanleitungen</h1>
-  <h1 style="font-size: 15px; margin-top: 0.2em;">Text anklicken zum Downloaden</h1>
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="index.html" aria-label="Zur Startseite von LADSPRINT">
+          <img class="brand-mark" src="logo/LADS_PRINT_LOGO_SCHWARZ.png" alt="LADSPRINT Logo">
+          <span class="brand-copy">
+            <span class="brand-title">LADSPRINT</span>
+            <span class="brand-subtitle">Gebrauchsanleitungen</span>
+          </span>
+        </a>
 
-  <table id="meineTabelle">
-    <thead>
-      <tr>
-        <th>Bild</th>
-        <th>Anleitung PDF (Anklicken zum Downloaden)</th>
-        <th>Video</th>
-      </tr>
-    </thead>
-    <tbody><!-- Zeilen werden via JS eingefügt --></tbody>
-  </table>
+        <nav class="site-nav" aria-label="Hauptnavigation">
+          <a class="back-link" href="index.html">Home</a>
+          <a class="back-link" href="impressum.html">Impressum</a>
+          <a class="back-link" href="Datenschutz.html">Datenschutz</a>
+        </nav>
+      </div>
+    </header>
 
-  <footer>
-    <p><a href="impressum.html" style="font-size:20px"
-          onclick="sessionStorage.setItem('scrollPosition',window.scrollY)">Impressum</a></p>
-    <p><a href="Datenschutz.html" style="font-size:20px"
-          onclick="sessionStorage.setItem('scrollPosition',window.scrollY)">Datenschutz</a></p>
-  </footer>
+    <main class="page-main">
+      <div class="container">
+        <section class="hero" aria-labelledby="page-title">
+          <span class="hero-eyebrow">Anleitungen</span>
+          <h1 class="page-title" id="page-title">Gebrauchsanleitungen</h1>
+          <p class="page-subtitle">Hier findest du alle verfügbaren Anleitungen übersichtlich an einem Ort. Suche nach dem passenden Produkt, öffne die PDF und nutze bei Bedarf das verfügbare Video.</p>
+        </section>
+
+        <section class="controls-card" aria-label="Filter und Sortierung">
+          <div class="controls-grid">
+            <div class="field">
+              <label for="manual-search">Anleitung suchen</label>
+              <input class="input" id="manual-search" type="search" placeholder="Produktname oder Dateiname eingeben" data-search-input>
+            </div>
+            <div class="field">
+              <label for="manual-sort">Sortierung</label>
+              <select class="select" id="manual-sort" data-sort-select>
+                <option value="name-asc">Name A bis Z</option>
+                <option value="name-desc">Name Z bis A</option>
+                <option value="video-first">Mit Video zuerst</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <div class="results-bar" aria-live="polite">
+          <p class="results-count" data-result-count>0 Anleitungen gefunden</p>
+        </div>
+
+        <section class="cards-grid" data-manual-grid aria-label="Liste der Gebrauchsanleitungen"></section>
+        <section class="notice-card" data-empty-state hidden>Keine Anleitungen gefunden. Passe deine Suche oder Sortierung an.</section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="footer-note">Alle Anleitungen von LADSPRINT an einem Ort.</p>
+        <div class="footer-links">
+          <a class="back-link" href="impressum.html">Impressum</a>
+          <a class="back-link" href="Datenschutz.html">Datenschutz</a>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <!-- --------------- Video-Modal --------------- -->
-  <div id="videoModal">
-    <div id="videoModalContent">
-      <span id="videoModalClose">&times;</span>
-      <video id="videoPlayer" controls style="display:none"></video>
-      <iframe id="videoIframe" style="display:none"
-              width="800" height="450" frameborder="0"
-              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <div class="video-modal" data-video-modal aria-hidden="true">
+    <div class="video-modal-dialog" data-video-dialog role="dialog" aria-modal="true" aria-label="Videoanzeige">
+      <button class="video-modal-close" type="button" data-video-close aria-label="Video schließen">×</button>
+      <iframe class="video-modal-frame" data-video-iframe allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen hidden></iframe>
+      <video class="video-modal-player" data-video-player controls hidden></video>
     </div>
   </div>
 
   <!-- --------------- Scripte -------------------- -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
-
-  <script>
-  /* ----------- Scroll-Position behalten ----------- */
-  window.addEventListener('beforeunload',()=>sessionStorage.setItem('scrollPosition',window.scrollY));
-  window.addEventListener('pageshow',()=>{const y=sessionStorage.getItem('scrollPosition');
-    if(y!==null){window.scrollTo(0,parseInt(y,10));sessionStorage.removeItem('scrollPosition')}});
-
-  /* ---------------- Daten & DOM ------------------- */
-  $(function(){
-    const artikelListe=[
-      {name:"Drehbares Rad V2.0",dateiname:"006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01"},
-      {name:"Schlauchadapter",dateiname:"002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02"},
-      {name:"Getränkehalter",dateiname:"005_A__T4__Gebrauchsanleitung__24_09_22__V01"},
-      {name:"Griffe Monsieur",dateiname:"019_A__CC__Gebrauchsanweisung__04_12_01__V02"},
-      {name:"Kippscheren",dateiname:"023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01"},
-      {name:"Laubschutzgitter",dateiname:"027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01"},
-      {name:"Saugrüssel",dateiname:"032_A__Saug_PBD40__Gebrauchsanleitung__V01"},
-      {
-        name:"Spikes, alle Varianten",
-        dateiname:"Spikes_Montage_Betriebsanleitung__25_04_06__V03",
-        video:"https://www.youtube.com/embed/IlAO6DtBMdc?si=sLlY_Ztoa5T7E-OQ",
-        videoTitle:"Montagevideo Spikes"
-      },
-      {name:"Stiftehalter Explore",dateiname:"025_A__Explore__Gebrauchsanweisung__V02"},
-      {name:"Stiftehalter Joy",dateiname:"025_B__Joy__Gebrauchsanleitung__24_10_28__V01"},
-      {name:"Wandhalterung GSR",dateiname:"035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02"},
-      {name:"Wandhalterung GWS",dateiname:"036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01"}
-    ];
-
-    const $tbody=$("#meineTabelle tbody");
-    artikelListe.forEach(a=>{
-      const bild=`bilder/${a.dateiname}.jpg`;
-      const pdf=`pdfs/${a.dateiname}.pdf`;
-      const linkText=a.videoTitle||`${a.name} Video`;
-      const videoCol=a.video?`<a href="#" class="video-link" data-video="${a.video}">${linkText}</a>`:"";
-      $tbody.append(`
-        <tr>
-          <td><img src="${bild}" alt="${a.name}"></td>
-          <td><a href="${pdf}" target="_blank">${a.name}</a></td>
-          <td>${videoCol}</td>
-        </tr>
-      `);
-    });
-
-    /* DataTable */
-    $("#meineTabelle").DataTable({
-      autoWidth:false,order:[[1,"asc"]],pageLength:25,
-      language:{url:"https://cdn.datatables.net/plug-ins/2.0.7/i18n/de-DE.json"}
-    });
-
-    /* ------------- Video-Modal-Logik ------------- */
-    $(document).on("click",".video-link",function(e){
-      e.preventDefault();
-      const src=$(this).data("video");
-      const yt=src.includes("youtube.com/embed");
-      if(yt){
-        let url=src+(src.includes("?")?"&":"?")+"autoplay=1";
-        $("#videoPlayer").hide().attr("src","");
-        $("#videoIframe").attr("src",url).show();
-      }else{
-        $("#videoIframe").hide().attr("src","");
-        $("#videoPlayer").attr("src",src).show()[0].play();
-      }
-      $("#videoModal").css("display","flex");
-    });
-
-    $("#videoModalClose,#videoModal").on("click",function(e){
-      if(e.target!==this)return;
-      $("#videoPlayer")[0].pause();
-      $("#videoPlayer").attr("src","").hide();
-      $("#videoIframe").attr("src","").hide();
-      $("#videoModal").hide();
-    });
-    $(document).on("keydown",e=>{
-      if(e.key==="Escape")$("#videoModalClose").click();
-    });
-  });
-  </script>
+  <script src="assets/app.js" defer></script>
 </body>
 </html>
