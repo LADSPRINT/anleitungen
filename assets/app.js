@@ -7,53 +7,65 @@ const state = {
 const DEFAULT_MANUALS = [
   {
     name: 'Drehbares Rad V2.0',
-    fileName: '006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01',
+    pdfFileName: '006_B__DH2.0__Gebrauchsanleitung__26__03__11__V02',
+    imageFileName: '006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01',
   },
   {
     name: 'Schlauchadapter',
-    fileName: '002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02',
+    pdfFileName: '002_EF__12z__V03__Gebrauchsanleitung__26__03__11___V03',
+    imageFileName: '002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02',
   },
   {
     name: 'Getränkehalter',
-    fileName: '005_A__T4__Gebrauchsanleitung__24_09_22__V01',
+    pdfFileName: '005_A__T4__Gebrauchsanleitung__26_03_11__V02',
+    imageFileName: '005_A__T4__Gebrauchsanleitung__24_09_22__V01',
   },
   {
     name: 'Griffe Monsieur',
-    fileName: '019_A__CC__Gebrauchsanweisung__04_12_01__V02',
+    pdfFileName: '019_A__CC__Gebrauchsanweisung__26_03_11__V03',
+    imageFileName: '019_A__CC__Gebrauchsanweisung__04_12_01__V02',
   },
   {
     name: 'Kippscheren',
-    fileName: '023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01',
+    pdfFileName: '023_A__41A__Gebrauchsanleitung__26_03_11__V02',
+    imageFileName: '023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01',
   },
   {
     name: 'Laubschutzgitter',
-    fileName: '027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01',
+    pdfFileName: '027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V02',
+    imageFileName: '027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01',
   },
   {
     name: 'Saugrüssel',
-    fileName: '032_A__Saug_PBD40__Gebrauchsanleitung__V01',
+    pdfFileName: '032_A__Saug_PBD40__Gebrauchsanleitung__V02',
+    imageFileName: '032_A__Saug_PBD40__Gebrauchsanleitung__V01',
   },
   {
     name: 'Spikes, alle Varianten',
-    fileName: 'Spikes_Montage_Betriebsanleitung__25_04_06__V03',
+    pdfFileName: 'Spikes_Montage_Betriebsanleitung__26_03_11__V04',
+    imageFileName: 'Spikes_Montage_Betriebsanleitung__25_04_06__V03',
     video: 'https://www.youtube.com/embed/IlAO6DtBMdc?si=sLlY_Ztoa5T7E-OQ',
     videoTitle: 'Video ansehen',
   },
   {
     name: 'Stiftehalter Explore',
-    fileName: '025_A__Explore__Gebrauchsanweisung__V02',
+    pdfFileName: '025_A__Explore__Gebrauchsanweisung__V03',
+    imageFileName: '025_A__Explore__Gebrauchsanweisung__V02',
   },
   {
     name: 'Stiftehalter Joy',
-    fileName: '025_B__Joy__Gebrauchsanleitung__24_10_28__V01',
+    pdfFileName: '025_B__Joy__Gebrauchsanleitung__26_03_11__V02',
+    imageFileName: '025_B__Joy__Gebrauchsanleitung__24_10_28__V01',
   },
   {
     name: 'Wandhalterung GSR',
-    fileName: '035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02',
+    pdfFileName: '035_B__GSR__Gebrauchsanleitung__26_03_11__V03',
+    imageFileName: '035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02',
   },
   {
     name: 'Wandhalterung GWS',
-    fileName: '036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01',
+    pdfFileName: '036_B__GWS_Kantteil__Gebrauchsanleitung__26_03_11__V02',
+    imageFileName: '036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01',
   },
 ];
 
@@ -115,7 +127,7 @@ function updateManualView() {
   const sortMode = dom.sortSelect?.value || 'name-asc';
 
   const filtered = state.manuals.filter((manual) => {
-    const haystack = [manual.name, manual.fileName, manual.videoTitle]
+    const haystack = [manual.name, manual.pdfFileName, manual.imageFileName, manual.videoTitle]
       .filter(Boolean)
       .join(' ')
       .toLowerCase();
@@ -168,7 +180,7 @@ function createManualCard(manual) {
   imageWrapper.className = 'manual-card-media';
 
   const image = document.createElement('img');
-  image.src = `bilder/${manual.fileName}.jpg`;
+  image.src = `bilder/${manual.imageFileName}.jpg`;
   image.alt = manual.name;
   image.loading = 'lazy';
   image.addEventListener('error', () => {
@@ -206,7 +218,7 @@ function createManualCard(manual) {
 
   const pdfLink = document.createElement('a');
   pdfLink.className = 'btn';
-  pdfLink.href = `pdfs/${manual.fileName}.pdf`;
+  pdfLink.href = `pdfs/${manual.pdfFileName}.pdf`;
   pdfLink.target = '_blank';
   pdfLink.rel = 'noopener noreferrer';
   pdfLink.textContent = 'PDF öffnen';
@@ -289,13 +301,20 @@ function normalizeManuals(value) {
 
   return value
     .filter((manual) => manual && typeof manual === 'object')
-    .map((manual) => ({
-      name: String(manual.name || '').trim(),
-      fileName: String(manual.fileName || '').trim(),
-      video: manual.video ? String(manual.video).trim() : '',
-      videoTitle: manual.videoTitle ? String(manual.videoTitle).trim() : '',
-    }))
-    .filter((manual) => manual.name && manual.fileName);
+    .map((manual) => {
+      const legacyFileName = String(manual.fileName || '').trim();
+      const pdfFileName = String(manual.pdfFileName || legacyFileName).trim();
+      const imageFileName = String(manual.imageFileName || legacyFileName).trim();
+
+      return {
+        name: String(manual.name || '').trim(),
+        pdfFileName,
+        imageFileName,
+        video: manual.video ? String(manual.video).trim() : '',
+        videoTitle: manual.videoTitle ? String(manual.videoTitle).trim() : '',
+      };
+    })
+    .filter((manual) => manual.name && manual.pdfFileName);
 }
 
 function initVideoModal() {

@@ -1,52 +1,86 @@
 [
   {
     "name": "Drehbares Rad V2.0",
-    "fileName": "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01"
+    "pdfFileName": "006_B__DH2.0__Gebrauchsanleitung__26__03__11__V02",
+    "imageFileName": "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Schlauchadapter",
-    "fileName": "002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02"
+    "pdfFileName": "002_EF__12z__V03__Gebrauchsanleitung__26__03__11___V03",
+    "imageFileName": "002_EF__12z__V03__Gebrauchsanleitung__25__05__25___V02",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Getränkehalter",
-    "fileName": "005_A__T4__Gebrauchsanleitung__24_09_22__V01"
+    "pdfFileName": "005_A__T4__Gebrauchsanleitung__26_03_11__V02",
+    "imageFileName": "005_A__T4__Gebrauchsanleitung__24_09_22__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Griffe Monsieur",
-    "fileName": "019_A__CC__Gebrauchsanweisung__04_12_01__V02"
+    "pdfFileName": "019_A__CC__Gebrauchsanweisung__26_03_11__V03",
+    "imageFileName": "019_A__CC__Gebrauchsanweisung__04_12_01__V02",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Kippscheren",
-    "fileName": "023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01"
+    "pdfFileName": "023_A__41A__Gebrauchsanleitung__26_03_11__V02",
+    "imageFileName": "023_A__41A__V01__Gebrauchsanleitung__24_10_28__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Laubschutzgitter",
-    "fileName": "027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01"
+    "pdfFileName": "027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V02",
+    "imageFileName": "027_A__T4__Laubschutzgitter__Gebrauchsanleitung__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Saugrüssel",
-    "fileName": "032_A__Saug_PBD40__Gebrauchsanleitung__V01"
+    "pdfFileName": "032_A__Saug_PBD40__Gebrauchsanleitung__V02",
+    "imageFileName": "032_A__Saug_PBD40__Gebrauchsanleitung__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Spikes, alle Varianten",
-    "fileName": "Spikes_Montage_Betriebsanleitung__25_04_06__V03",
+    "pdfFileName": "Spikes_Montage_Betriebsanleitung__26_03_11__V04",
+    "imageFileName": "Spikes_Montage_Betriebsanleitung__25_04_06__V03",
     "video": "https://www.youtube.com/embed/IlAO6DtBMdc?si=sLlY_Ztoa5T7E-OQ",
     "videoTitle": "Video ansehen"
   },
   {
     "name": "Stiftehalter Explore",
-    "fileName": "025_A__Explore__Gebrauchsanweisung__V02"
+    "pdfFileName": "025_A__Explore__Gebrauchsanweisung__V03",
+    "imageFileName": "025_A__Explore__Gebrauchsanweisung__V02",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Stiftehalter Joy",
-    "fileName": "025_B__Joy__Gebrauchsanleitung__24_10_28__V01"
+    "pdfFileName": "025_B__Joy__Gebrauchsanleitung__26_03_11__V02",
+    "imageFileName": "025_B__Joy__Gebrauchsanleitung__24_10_28__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Wandhalterung GSR",
-    "fileName": "035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02"
+    "pdfFileName": "035_B__GSR__Gebrauchsanleitung__26_03_11__V03",
+    "imageFileName": "035_B__GSR__V01__Gebrauchsanleitung__24__12__30__V02",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Wandhalterung GWS",
-    "fileName": "036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01"
+    "pdfFileName": "036_B__GWS_Kantteil__Gebrauchsanleitung__26_03_11__V02",
+    "imageFileName": "036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01",
+    "video": "",
+    "videoTitle": ""
   }
 ]
