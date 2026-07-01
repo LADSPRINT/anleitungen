@@ -2,7 +2,9 @@
   {
     "name": "Drehbares Rad V2.0",
     "pdfFileName": "006_B__DH2.0__Gebrauchsanleitung__26__03__11__V02",
-    "imageFileName": "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01"
+    "imageFileName": "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Schlauchadapter",
@@ -80,5 +82,10 @@
     "imageFileName": "036_B__GWS_Kantteil__Gebrauchsanleitung__25__05__20__V01",
     "video": "",
     "videoTitle": ""
+  },
+  {
+    "name": "Bodenstativ",
+    "pdfFileName": "Gebrauchsanleitung_Bodenstativ_V1.0__26_07_01",
+    "imageFileName": "Bodenstativ"
   }
 ]
