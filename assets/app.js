@@ -1,6 +1,5 @@
 const state = {
   manuals: [],
-  filteredManuals: [],
   activeVideoTrigger: null,
 };
 
@@ -136,7 +135,6 @@ function updateManualView() {
   });
 
   filtered.sort((left, right) => compareManuals(left, right, sortMode));
-  state.filteredManuals = filtered;
   renderManuals(filtered);
 }
 
