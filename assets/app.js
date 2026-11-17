@@ -341,11 +341,6 @@ function openVideoModal(source, trigger) {
     return;
   }
 
-  if (isYouTubeUrl(source)) {
-    openExternalVideo(source);
-    return;
-  }
-
   state.activeVideoTrigger = trigger;
   dom.videoModal.classList.add('is-open');
   dom.videoModal.setAttribute('aria-hidden', 'false');
