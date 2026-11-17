@@ -103,16 +103,9 @@ async function initManualsPage() {
 
     state.manuals = manuals;
     updateManualView();
-  } catch (error) {
+  } catch {
     state.manuals = normalizeManuals(DEFAULT_MANUALS);
-
-    if (state.manuals.length > 0) {
-      updateManualView();
-      return;
-    }
-
-    showLoadError();
-    console.error('Anleitungen konnten nicht geladen werden.', error);
+    updateManualView();
   }
 }
 
@@ -280,16 +273,6 @@ function getYouTubeWatchUrl(source) {
   }
 
   return source;
-}
-
-function showLoadError() {
-  if (!dom.resultCount || !dom.emptyState) {
-    return;
-  }
-
-  dom.resultCount.textContent = '0 Anleitungen gefunden';
-  dom.emptyState.hidden = false;
-  dom.emptyState.textContent = 'Die Anleitungen konnten momentan nicht geladen werden.';
 }
 
 function normalizeManuals(value) {
