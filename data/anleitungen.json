@@ -2,7 +2,9 @@
   {
     "name": "Drehbares Rad V2.0",
     "pdfFileName": "006_B__DH2.0__Gebrauchsanleitung__26__11__14__V03",
-    "imageFileName": "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01"
+    "imageFileName": "006_B__DH2.0__Gebrauchsanleitung__25__01__11__V01",
+    "video": "",
+    "videoTitle": ""
   },
   {
     "name": "Schlauchadapter",
@@ -55,10 +57,8 @@
   },
   {
     "name": "Stiftehalter Explore",
-    "pdfFileName": "025_A__Explore__Gebrauchsanweisung__V03",
-    "imageFileName": "025_A__Explore__Gebrauchsanweisung__V02",
-    "video": "",
-    "videoTitle": ""
+    "pdfFileName": "025_A__Explore__Gebrauchsanweisung__V04",
+    "imageFileName": "025_A__Explore__Gebrauchsanweisung__V02"
   },
   {
     "name": "Stiftehalter Joy",
